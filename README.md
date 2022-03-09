@@ -17,5 +17,3 @@ we just need import the pagecontext from pagecontext.js , deconstruct the values
 In this way we can pass all the value we need in all the file in our app without need to pass props up and down (props drilling)
 
 <img width="655" alt="Screenshot 2022-03-09 at 23 32 26" src="https://user-images.githubusercontent.com/74420607/157557041-abdfc078-6bc9-4091-9932-357fdfc9ddf5.png">
-
-
