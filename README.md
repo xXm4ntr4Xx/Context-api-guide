@@ -26,12 +26,60 @@ In this way we can pass all the value we need in all the file in our app without
 1. first we create a context file
   
   <img width="720" alt="Screenshot 2022-03-14 at 18 10 48" src="https://user-images.githubusercontent.com/74420607/158234671-d68af0c7-cbcd-4634-a431-488b0ad25287.png">
+  
+  source code = export const ApiContext = createContext();
+
+export  function ApiContextprovider(props){
+    const [element,setElement] = useState({});
+
+useEffect(async ()=>{
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await response.json();
+
+    setElement(data)
+
+},[])
+
+return(
+    <ApiContext.Provider value={{element, setElement}}>
+        {props.children}
+    </ApiContext.Provider>
+)
+    
+}
 <hr/>
 2. We wrap the main app file  with the created apiContextProvider on context file
 
   <img width="681" alt="Screenshot 2022-03-14 at 18 12 50" src="https://user-images.githubusercontent.com/74420607/158234994-cc9eb1cb-eb46-4f22-81a2-7021df7c1eb3.png">
+  
+  source code = function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    
+      <ApiContextprovider>
+        <Component {...pageProps} />
+      </ApiContextprovider>
+    
+  )
+}
+
+export default MyApp
 <hr/>
 3. And now we just need to destructure the value we passed in the Apicontext.Provider and usit in within the file
 
 <img width="601" alt="Screenshot 2022-03-14 at 18 15 39" src="https://user-images.githubusercontent.com/74420607/158235440-7380ac69-2e40-4d46-8867-cce0ecbe04ed.png">
 
+source code = const Home: NextPage = () => {
+
+  const { element } = useContext(ApiContext);
+  
+ console.log(element)
+  return (
+    <div className={styles.container}>
+      {element.map((ele: any)=>{
+        return <p>{ele.id}</p>
+      })} 
+    </div>
+  )
+}
+
+export default Home
